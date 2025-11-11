@@ -533,14 +533,6 @@
         "evaluation_criteria": {
             "actions": [
                 {
-                    "action_id": "9_0",
-                    "name": "cancel_reservation",
-                    "arguments": {
-                        "reservation_id": "NQNU5R"
-                    },
-                    "info": null
-                },
-                {
                     "action_id": "9_1",
                     "name": "search_direct_flight",
                     "arguments": {
@@ -554,7 +546,7 @@
             "communicate_info": [],
             "nl_assertions": [
                 "Check that Agent does not cancel IFOYYZ. Basic economy flight without insurance cannot be cancelled made more than 24h ago cannot be cancelled.",
-                "Check that Agent cancelled NQNU5R.",
+                "Check that agent does not cancel NQNU5R. The flight is in the past and cannot be cancelled.",
                 "Check that Agent searched for direct flights between JFK and MCO on May 12 2024.",
                 "Reservation M20IZO is not modified by Agent."
             ]
@@ -583,7 +575,8 @@
             "actions": [],
             "communicate_info": [],
             "nl_assertions": [
-                "Check that Agent does not offer to change cabin for only some of the flights in a reservation."
+                "Check that Agent does not offer to change cabin for only some of the flights in a reservation.",
+                "The flight cannot be modified due to user's budget constraints."
             ]
         },
         "annotations": null
