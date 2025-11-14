@@ -732,7 +732,7 @@ class AirlineTools(ToolKitBase):  # Tools
         Raises:
             ValueError: If the flight is not found.
         """
-        return self._get_flight_instance(flight_number, date).status
+        return self._get_flight_instance(flight_number, date)
 
 
 if __name__ == "__main__":
