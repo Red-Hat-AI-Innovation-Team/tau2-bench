@@ -405,13 +405,13 @@
                 }
             ],
             "communicate_info": [
-                "1628"
+                "708"
             ],
             "nl_assertions": [
                 "Agent upgrades XEHM4B to economy.",
                 "Agent cancels XEHM4B.",
                 "Agent cancels 59XX6W.",
-                "Agent communicates that total cost of upcoming flights is $1,628."
+                "Agent communicates that total cost of upcoming flights is $708."
             ]
         },
         "annotations": null
