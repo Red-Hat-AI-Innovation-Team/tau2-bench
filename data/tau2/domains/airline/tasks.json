@@ -285,6 +285,15 @@
                         "user_id": "mei_brown_7075"
                     },
                     "info": null
+                },
+                {
+                    "action_id": "5_1",
+                    "name": "send_certificate",
+                    "arguments": {
+                        "user_id": "mei_brown_7075",
+                        "amount": "200"
+                    },
+                    "info": null
                 }
             ],
             "communicate_info": [],
