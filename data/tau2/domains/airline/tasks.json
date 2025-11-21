@@ -285,12 +285,21 @@
                         "user_id": "mei_brown_7075"
                     },
                     "info": null
+                },
+                {
+                    "action_id": "5_1",
+                    "name": "send_certificate",
+                    "arguments": {
+                        "user_id": "mei_brown_7075",
+                        "amount": "200"
+                    },
+                    "info": null
                 }
             ],
             "communicate_info": [],
             "nl_assertions": [
                 "Agent identifies that user is not a Gold member but a Regular member.",
-                "Agent does not offer any compensation."
+                "Agent should offer $200 compensation."
             ]
         },
         "annotations": null
@@ -405,13 +414,13 @@
                 }
             ],
             "communicate_info": [
-                "1628"
+                "708"
             ],
             "nl_assertions": [
                 "Agent upgrades XEHM4B to economy.",
                 "Agent cancels XEHM4B.",
                 "Agent cancels 59XX6W.",
-                "Agent communicates that total cost of upcoming flights is $1,628."
+                "Agent communicates that total cost of upcoming flights is $708."
             ]
         },
         "annotations": null
@@ -533,14 +542,6 @@
         "evaluation_criteria": {
             "actions": [
                 {
-                    "action_id": "9_0",
-                    "name": "cancel_reservation",
-                    "arguments": {
-                        "reservation_id": "NQNU5R"
-                    },
-                    "info": null
-                },
-                {
                     "action_id": "9_1",
                     "name": "search_direct_flight",
                     "arguments": {
@@ -554,7 +555,7 @@
             "communicate_info": [],
             "nl_assertions": [
                 "Check that Agent does not cancel IFOYYZ. Basic economy flight without insurance cannot be cancelled made more than 24h ago cannot be cancelled.",
-                "Check that Agent cancelled NQNU5R.",
+                "Check that agent does not cancel NQNU5R. The flight is in the past and cannot be cancelled.",
                 "Check that Agent searched for direct flights between JFK and MCO on May 12 2024.",
                 "Reservation M20IZO is not modified by Agent."
             ]
@@ -583,7 +584,8 @@
             "actions": [],
             "communicate_info": [],
             "nl_assertions": [
-                "Check that Agent does not offer to change cabin for only some of the flights in a reservation."
+                "Check that Agent does not offer to change cabin for only some of the flights in a reservation.",
+                "The flight cannot be modified due to user's budget constraints."
             ]
         },
         "annotations": null
@@ -755,7 +757,7 @@
     {
         "id": "14",
         "description": {
-            "purpose": "Test the capacity of the agent to look for the cheapest flights with constraints on dates, cities and cabin. \n\nTest the capacity of agent to follow rule that max 1 certificate can be used for payment. \n\n\nTest capacity of agents to reason about money amounts.\n\nThe user has multiple certificates, gift cards and 2 credit cards one file. for the payment, we expect agent to understand how to maximize use of gift card + 1 certificate to minimize amount put on the credit card.\n\nThe total cost of the new flight will be $871. The correct split is to use first both gift cards for $327, the $500 certificate, and put the remaining $44 dollars on the master card.",
+            "purpose": "Test the capacity of the agent to look for the cheapest flights with constraints on dates, cities and cabin. \n\nTest the capacity of agent to follow rule that max 1 certificate can be used for payment. \n\n\nTest capacity of agents to reason about money amounts.\n\nThe user has multiple certificates, gift cards and 2 credit cards one file. for the payment, we expect agent to understand how to maximize use of gift card + 1 certificate to minimize amount put on the credit card.",
             "relevant_policies": null,
             "notes": null
         },
@@ -845,17 +847,13 @@
                     "info": null
                 }
             ],
-            "communicate_info": [
-                "327",
-                "1000",
-                "44"
-            ],
+            "communicate_info": [],
             "nl_assertions": [
                 "Agent communicates that total gift card balance is $327.",
                 "Agent communicates that total certificate balance if $1000.",
                 "Agent should cancel reservation K1NW8N.",
                 "Agent should book a reservation with the following flights: HAT023 and HAT204, HAT100. No insurance. No baggage. Departure on 2024-05-26, return on 2024-05-28.",
-                "Agent communicated that the $44 will be charged to the mastercard."
+                "Agent communicated that the $1786 will be charged to the mastercard."
             ]
         },
         "annotations": null
@@ -1870,7 +1868,7 @@
     {
         "id": "29",
         "description": {
-            "purpose": "Test complex reservation change.",
+            "purpose": "Test robustness of agent following the policy in case of user trying to change the reservation to a different origin or destination.",
             "relevant_policies": null,
             "notes": null
         },
@@ -1894,43 +1892,12 @@
                         "reservation_id": "VA5SGQ"
                     },
                     "info": null
-                },
-                {
-                    "action_id": "29_1",
-                    "name": "update_reservation_flights",
-                    "arguments": {
-                        "reservation_id": "VA5SGQ",
-                        "cabin": "economy",
-                        "flights": [
-                            {
-                                "flight_number": "HAT169",
-                                "date": "2024-05-17"
-                            },
-                            {
-                                "flight_number": "HAT033",
-                                "date": "2024-05-19"
-                            }
-                        ],
-                        "payment_id": "credit_card_8003957"
-                    },
-                    "info": null
-                },
-                {
-                    "action_id": "29_2",
-                    "name": "update_reservation_baggages",
-                    "arguments": {
-                        "reservation_id": "VA5SGQ",
-                        "total_baggages": 1,
-                        "nonfree_baggages": 0,
-                        "payment_id": "credit_card_8003957"
-                    },
-                    "info": null
                 }
             ],
             "communicate_info": [],
             "nl_assertions": [
-                "Agent updates reservation VA5SGQ to flights HAT169 and HAT033.",
-                "Agent updates reservation VA5SGQ to 1 free baggage."
+                "Agent refuses to change the reservation as Origin and Destination needs to be the same as the original reservation."
+
             ]
         },
         "annotations": null
@@ -1945,7 +1912,7 @@
         "user_scenario": {
             "persona": null,
             "instructions": {
-                "task_instructions": "You want to change your upcoming one-stop flight from LAS to IAH to a nonstop flight.\n\nYou also want to remove your checked bag and want the agent to refund you for the same. If agent says that you cannot remove bags, accept it and move on.",
+                "task_instructions": "You want to change your upcoming one-stop flight from LAS to IAH to the cheapest nonstop flight in the same class.\n\nYou also want to remove your checked bag and want the agent to refund you for the same. If agent says that you cannot remove bags, accept it and move on.",
                 "domain": "airline",
                 "reason_for_call": "You want to make modifications to your upcoming one-stop flight from LAS to IAH.",
                 "known_info": "You are James Taylor.\n\nYour user id is james_taylor_7043. \n\nYour reservation ID is 1N99U6.",
@@ -2039,7 +2006,7 @@
         "user_scenario": {
             "persona": null,
             "instructions": {
-                "task_instructions": "If the agent says your ticket is a basic economy one, you are willing to upgrade to economy in order to make the change.\n\nYou are willing to pay up to $100 for the change.\n\nYou don't want to buy a new ticket.",
+                "task_instructions": "If the agent says your ticket is a basic economy one, you are willing to upgrade to economy in order to make the change.\n\nYou are willing to pay for the change.\n\nYou don't want to buy a new ticket.",
                 "domain": "airline",
                 "reason_for_call": "You want to change your upcoming flight from EWR on May 21 to a nonstop flight on the same day. \n\nYour mother is really sick and you need to get back home sooner to take care of her.",
                 "known_info": "You are Ivan Rossi.\nYour user id is ivan_rossi_8555.",
@@ -2194,7 +2161,7 @@
                     "arguments": {
                         "reservation_id": "HXDUBJ",
                         "total_baggages": 2,
-                        "nonfree_baggages": 2,
+                        "nonfree_baggages": 0,
                         "payment_id": "gift_card_6941833"
                     },
                     "info": null
@@ -2204,7 +2171,7 @@
             "nl_assertions": [
                 "Agent updates reservation HXDUBJ to flights HAT072 on 2024-05-19 and HAT278 on 2024-05-23.",
                 "Agent does not allow change to business class for only one leg of the flight.",
-                "Agent add 2 non-free baggages to reservation HXDUBJ."
+                "Agent add 2 free baggages to reservation HXDUBJ as she is a gold member."
             ]
         },
         "annotations": null
