@@ -299,7 +299,7 @@
             "communicate_info": [],
             "nl_assertions": [
                 "Agent identifies that user is not a Gold member but a Regular member.",
-                "Agent does not offer any compensation."
+                "Agent should offer $200 compensation."
             ]
         },
         "annotations": null
