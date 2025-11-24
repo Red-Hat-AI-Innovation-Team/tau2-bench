@@ -202,6 +202,25 @@ def generate(
     if model.startswith("claude") and not ALLOW_SONNET_THINKING:
         kwargs["thinking"] = {"type": "disabled"}
     litellm_messages = to_litellm_messages(messages)
+
+    # Log message history at DEBUG level
+    from tau2.utils.display import MarkdownDisplay
+    role_counts = {}
+    for msg in messages:
+        role_counts[msg.role] = role_counts.get(msg.role, 0) + 1
+    logger.debug(
+        f"Sending {len(messages)} messages to {model} | "
+        f"system:{role_counts.get('system', 0)} user:{role_counts.get('user', 0)} "
+        f"assistant:{role_counts.get('assistant', 0)} tool:{role_counts.get('tool', 0)}"
+    )
+    logger.debug(
+        f"\n{'='*80}\n"
+        f"LLM Request to {model}\n"
+        f"{'='*80}\n"
+        f"{MarkdownDisplay.display_messages(messages)}\n"
+        f"{'='*80}"
+    )
+
     tools = [tool.openai_schema for tool in tools] if tools else None
     if tools and tool_choice is None:
         tool_choice = "auto"

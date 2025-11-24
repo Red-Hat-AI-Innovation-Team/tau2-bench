@@ -7,7 +7,7 @@ from typing import Optional
 
 from loguru import logger
 
-from tau2.agent.llm_agent import LLMAgent, LLMGTAgent, LLMSoloAgent
+from tau2.agent.llm_agent import LLMAgent, LLMGTAgent, LLMInjectionAgent, LLMSoloAgent
 from tau2.data_model.simulation import (
     AgentInfo,
     Info,
@@ -425,7 +425,17 @@ def run_task(
     AgentConstructor = registry.get_agent_constructor(agent)
 
     solo_mode = False
-    if issubclass(AgentConstructor, LLMAgent):
+    if issubclass(AgentConstructor, LLMInjectionAgent):
+        # LLMInjectionAgent requires handbook_dir parameter
+        handbook_dir = f"data/tau2/domains/{domain}/tool_handbook"
+        agent = AgentConstructor(
+            tools=environment.get_tools(),
+            domain_policy=environment.get_policy(),
+            handbook_dir=handbook_dir,
+            llm=llm_agent,
+            llm_args=llm_args_agent,
+        )
+    elif issubclass(AgentConstructor, LLMAgent):
         agent = AgentConstructor(
             tools=environment.get_tools(),
             domain_policy=environment.get_policy(),
