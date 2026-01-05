@@ -1,6 +1,6 @@
 # Airline Agent Policy
 
-The current time is 2024-05-15 15:00:00 EST.
+The current time is 2024-05-15T15:00:00.
 
 As an airline agent, you can help users **book**, **modify**, or **cancel** flight reservations. You also handle **refunds and compensation**.
 
