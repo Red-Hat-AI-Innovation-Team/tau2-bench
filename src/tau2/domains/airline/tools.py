@@ -735,7 +735,7 @@ class AirlineTools(ToolKitBase):  # Tools
         return self._get_flight_instance(flight_number, date).status
 
     @is_tool(ToolType.READ)
-    def access_tool_handbook(self, tool_name: str) -> str:
+    def access_tool_handbook(self, target_tool: str) -> str:
         """MANDATORY: You MUST call this tool BEFORE using any other tool for the first time.
 
         This tool provides critical policy guidelines, prerequisites, and validation rules
@@ -743,7 +743,7 @@ class AirlineTools(ToolKitBase):  # Tools
         may result in policy violations and incorrect tool usage.
 
         Args:
-            tool_name: The name of the tool to get the handbook for.
+            target_tool: The name of the tool to get the handbook for.
                 Available tools: book_reservation, calculate, cancel_reservation,
                 get_flight_status, get_reservation_details, get_user_details,
                 list_all_airports, search_direct_flight, search_onestop_flight,
@@ -755,7 +755,7 @@ class AirlineTools(ToolKitBase):  # Tools
             The handbook content with usage guidelines, prerequisites, and examples.
 
         Raises:
-            ValueError: If the tool_name is not recognized or handbook not found.
+            ValueError: If the target_tool is not recognized or handbook not found.
         """
         valid_tools = [
             "book_reservation", "calculate", "cancel_reservation",
@@ -766,18 +766,18 @@ class AirlineTools(ToolKitBase):  # Tools
             "update_reservation_passengers"
         ]
 
-        if tool_name not in valid_tools:
+        if target_tool not in valid_tools:
             raise ValueError(
-                f"Unknown tool: '{tool_name}'. "
+                f"Unknown tool: '{target_tool}'. "
                 f"Available tools: {', '.join(valid_tools)}"
             )
 
-        handbook_path = f"tool_handbook/{tool_name}_handbook.md"
+        handbook_path = f"tool_handbook/{target_tool}_handbook.md"
         try:
             with open(handbook_path, "r") as f:
                 return f.read()
         except FileNotFoundError:
-            raise ValueError(f"Handbook not found for tool: {tool_name}")
+            raise ValueError(f"Handbook not found for tool: {target_tool}")
 
 
 if __name__ == "__main__":
