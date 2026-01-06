@@ -772,7 +772,8 @@ class AirlineTools(ToolKitBase):  # Tools
                 f"Available tools: {', '.join(valid_tools)}"
             )
 
-        handbook_path = f"tool_handbook/{target_tool}_handbook.md"
+        # handbook_path = f"tool_handbook_policy/{target_tool}_handbook.md"
+        handbook_path = f"tool_handbook_verbose/{target_tool}_handbook.md"
         try:
             with open(handbook_path, "r") as f:
                 return f.read()
