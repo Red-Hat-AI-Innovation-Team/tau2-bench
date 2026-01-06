@@ -28,6 +28,10 @@ In each turn you can either:
 - Make a tool call.
 You cannot do both at the same time.
 
+IMPORTANT: Before using any tool for the first time in a conversation, you MUST call
+access_tool_handbook(tool_name) to retrieve the usage guidelines and policy constraints
+for that tool. This is mandatory to ensure correct tool usage.
+
 Try to be helpful and always follow the policy. Always make sure you generate valid JSON only.
 """.strip()
 

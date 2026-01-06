@@ -736,12 +736,11 @@ class AirlineTools(ToolKitBase):  # Tools
 
     @is_tool(ToolType.READ)
     def access_tool_handbook(self, tool_name: str) -> str:
-        """Access the expert-written handbook for a specific airline tool.
+        """MANDATORY: You MUST call this tool BEFORE using any other tool for the first time.
 
-        IMPORTANT: Always call this tool before using any other tool for the
-        first time in a conversation. The handbook contains critical usage
-        guidelines, prerequisites, conditional checks, and policy constraints
-        that must be followed to ensure correct tool usage.
+        This tool provides critical policy guidelines, prerequisites, and validation rules
+        that are REQUIRED before using any airline tool. Failure to consult the handbook
+        may result in policy violations and incorrect tool usage.
 
         Args:
             tool_name: The name of the tool to get the handbook for.
@@ -753,14 +752,7 @@ class AirlineTools(ToolKitBase):  # Tools
                 update_reservation_passengers
 
         Returns:
-            The handbook content containing:
-            - Overview and purpose
-            - API signature and arguments
-            - When to use / when NOT to use
-            - Prerequisites (information to collect first)
-            - Conditional checks (policy validations)
-            - Edge cases and special considerations
-            - Valid and invalid usage examples
+            The handbook content with usage guidelines, prerequisites, and examples.
 
         Raises:
             ValueError: If the tool_name is not recognized or handbook not found.
